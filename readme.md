@@ -10,51 +10,30 @@ Outside of the documentation, which is expansive, spotify offers an 'api console
 
 If you prefer to use Postman, you can! One of these tools will be useful. The nice thing about the Spotify Web Console is that it has a lot of human readable content to point you in the right direction.
 
-## Getting the Code to Run
+## The Original 
 
-Fork then clone this repository! Then, from the repo directory run:
+The original assignment is [found here](https://github.com/gSchool/spotify-albums-and-tracks). While it is not required to have completed the original before attempting the remix, if you HAVE completed the original you can reuse quite a lot of the code. 
 
-```
-python -m SimpleHTTPServer
-```
+The original also has some javascript and an `index.html` file as a starting point. While these are not perfect analogs, some of THAT code may also be useful to start this server side remix.
 
-Now navigate chrome to http://localhost:8000
+## The Remix
 
-Try a search for your favorite artist!
+This time around, instead of using AJAX and DOM manipulation, we want to use the node.js requests module, and `.ejs` templates to create the same result as before: an application that can display all the albums with all the tracks on spotify for any given artist, as well as the ability to search for an artist
 
-## Whats Going On
-
-As a baseline, we're making a single request to the Spotify API. You can look at the code or the network tab to see the request being made, but the gist is that we request to:
-
-```
-https://api.spotify.com/v1/search?type=artist&q=WHATEVER YOU TYPE
-```
-
-Head over to the API docs for more about the search endpoint! [https://developer.spotify.com/web-api/search-item/](https://developer.spotify.com/web-api/search-item/)
-
-We parse the results, and populate them into the results area. Simple as pie.
 
 ## Your Task
 
-Your task is to complete this app so that it works perfectly on the front-end.  Then once you have done that, convert the app to use Express server side requests instead of AJAX.   
+Create an express server in this directory. This node+express server should have 2 routes which achieve the following result:
 
-### Front End
+1. A route structured like this `/search/:searchString`. This route should perform a search on Spotify's API and then serve an `.ejs` file that has the first 20 artist results for the search string. Each result should be a hyper-link (`<a>` tag) that sends the user to the artist page.
+2. The artist page route, structured like this `/artist/:spotifyArtistId` which accepts a Spotify artist id and then queries the Spotify API for every album that the artist queried has currently available on Spotify. Remember, this page must meet the following requirements: 
+	* Albums appear with their release date.
+	* Each album has all of its tracks displayed before the next album appears. 
+	* Each Track must have its popularity metric displayed next to the track name.
 
-Complete the function `displayAlbumsAndTracks`. Right now, when you click one of the results this function is called, but it simply prints to the console. This function should do 3 things:
-
-1. Query the Spotify API for every album produced by the artist you clicked on.
-2. For each of those albums fetch every track on the album.
-3. Display this information to the user such that:
-	* Albums appear with its release date.
-	* Each album has its tracks displayed before the next album appears.
-	* All of this information should be appended to this div: `<div id='albums-and-tracks'>`
-
-### Back End
-
-Create an express server in this directory and move all of the front-end requests to the back-end.  There is more than one way to complete this task, so first focus on simply talking to spotify's API inside Express.
 
 ### Heres a Tip
 You'll need to use these two endpoints, but you may also need to use more:
 
-[https://developer.spotify.com/web-api/console/get-album/](https://developer.spotify.com/web-api/console/get-album/)
-[https://developer.spotify.com/web-api/console/get-artist-albums/](https://developer.spotify.com/web-api/console/get-artist-albums/)
+* [https://developer.spotify.com/web-api/console/get-album/](https://developer.spotify.com/web-api/console/get-album/)
+* [https://developer.spotify.com/web-api/console/get-artist-albums/](https://developer.spotify.com/web-api/console/get-artist-albums/)
