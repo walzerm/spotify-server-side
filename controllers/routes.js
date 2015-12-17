@@ -13,24 +13,24 @@ router.post('/artist', function(req, res) {
     //    });
     //    req.on('end', function(){
     //    var pd = parsedData.split('=');
-        var url = 'https://api.spotify.com/v1/search?type=artist&q=' + pd[1];
+    //console.log(req.body.q);
+        var url = 'https://api.spotify.com/v1/search?type=artist&q=' + req.body.q;
     //    var artistArr = [];
-        request.get(url, function(err, response, body) {
+        request(url, function(err, response, body) {
             if (!err && response.statusCode === 200) {
                 data = JSON.parse(body);
                 var artistObject = data.artists;
                 var artists = artistObject.items;
-                artists.forEach(function(artist) {
-                    console.log(artist.name);
-                    artistArr.push(artist.name);
-                })
-                res.send(artistArr);
-                res.end();
+                res.render('artists', {artistData: artists});
+                //artists.forEach(function(artist) {
+                //    console.log(artist.name);
+                //    artistArr.push(artist.name);
+                //})
+                //res.send(artistArr);
+                //res.end();
             }
         })
         //res.write(artists);
-
-    })
 })
 
 module.exports = router;

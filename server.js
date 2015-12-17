@@ -2,11 +2,17 @@ var express = require('express');
 var app = express();
 var request = require('request');
 var fs = require('fs');
+var bodyParser = require('body-parser');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.static('/public'));
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 /*
 

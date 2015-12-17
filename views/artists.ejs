@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Artists from Search</title>
+    </head>
+    <body>
+        <% artistData.forEach(function(artist) { %>
+            <% //console.log(artist.name); %>
+            <a href="#/<%= artist.id %>"><%= artist.name %></a>
+            <br>
+        <% }); %>
+
+    </body>
+</html>
