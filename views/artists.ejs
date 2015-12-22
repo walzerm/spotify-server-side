@@ -3,12 +3,19 @@
     <head>
         <meta charset="utf-8">
         <title>Artists from Search</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     </head>
     <body>
-        <% artistData.forEach(function(artist) { %>
-            <a href="albums/<%= artist.id %>"><%= artist.name %></a>
-            <br>
-        <% }); %>
-
+        <div class="container-fluid">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h2>Artists</h2>
+                <% artistData.forEach(function(artist) { %>
+                    <a href="albums/<%= artist.id %>"><%= artist.name %></a>
+                    <br>
+                <% }); %>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
     </body>
 </html>
