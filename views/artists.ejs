@@ -6,7 +6,6 @@
     </head>
     <body>
         <% artistData.forEach(function(artist) { %>
-            <% //console.log(artist.name); %>
             <a href="albums/<%= artist.id %>"><%= artist.name %></a>
             <br>
         <% }); %>
