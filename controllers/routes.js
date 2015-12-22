@@ -7,30 +7,50 @@ router.get('/', function(req, res) {
 })
 
 router.post('/artist', function(req, res) {
-    //var parsedData = '';
-    //    req.on('data', function(chunk) {
-    //        parsedData += chunk;
-    //    });
-    //    req.on('end', function(){
-    //    var pd = parsedData.split('=');
-    //console.log(req.body.q);
         var url = 'https://api.spotify.com/v1/search?type=artist&q=' + req.body.q;
-    //    var artistArr = [];
         request(url, function(err, response, body) {
             if (!err && response.statusCode === 200) {
-                data = JSON.parse(body);
+                var data = JSON.parse(body);
                 var artistObject = data.artists;
                 var artists = artistObject.items;
+                console.log(artists);
                 res.render('artists', {artistData: artists});
-                //artists.forEach(function(artist) {
-                //    console.log(artist.name);
-                //    artistArr.push(artist.name);
-                //})
-                //res.send(artistArr);
-                //res.end();
             }
         })
-        //res.write(artists);
+})
+
+router.get('/albums/:id', function(req, res) {
+    var artistID = req.params.id;
+    var albumURL = 'https://api.spotify.com/v1/artists/' + artistID + '/albums';
+    var albumTrackArr = [];
+    //create the object of artist's albums, keyed to album id
+    request(albumURL, function(err, response, body) {
+        if(!err && response.statusCode === 200) {
+            var data = JSON.parse(body);
+            var albumObj = data.items;
+
+            albumObj.forEach(function(album) {
+                //Get the tracks
+                var trackArr = [];
+                var trackURL = 'https://api.spotify.com/v1/albums/' + album.id + '/tracks';
+                request(trackURL, function(error, response, body) {
+                    if (!error && response.statusCode === 200) {
+                        var trackData = JSON.parse(body);
+                        var trackObj = trackData.items;
+                        trackObj.forEach(function(track) {
+                            trackArr.push(track.name);
+
+                        })
+                    }
+                    var albumTrackObj = {name: album.name, tracks: trackArr};
+
+                    albumTrackArr.push(albumTrackObj);
+                    console.log(albumTrackArr);
+                    res.render('albums', {albumTrackArr: albumTrackArr});
+                })
+            })
+        }
+    })
 })
 
 module.exports = router;
